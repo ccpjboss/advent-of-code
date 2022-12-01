@@ -24,11 +24,7 @@ fn main() {
         }
     }
     elfs.push(current_sum);
-    elfs.sort();
-    let mut reverse = elfs.iter().rev();
+    elfs.sort_by(|a,b| b.cmp(a));
 
-    println!(
-        "Total calories from top 3 elfs is: {}",
-        reverse.next().unwrap() + reverse.next().unwrap() + reverse.next().unwrap()
-    )
+    println!("Total calories from top 3 elfs is: {}",elfs.iter().take(3).sum::<i32>());
 }
