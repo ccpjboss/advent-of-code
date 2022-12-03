@@ -54,8 +54,38 @@ pub fn process_part1(input: &str) -> u32 {
     return result;
 }
 
+pub fn process_part2(input: &str) -> u32 {
+    let result = input.lines().map(|line| {
+        let moves: Vec<&str> = line.split(" ").collect();
+        let opponent_move = moves[0].parse::<Move>().unwrap();
+        match moves[1] {
+            "X" => {
+                let our_move = match opponent_move {
+                    Move::Rock => Move::Scissors,
+                    Move::Paper => Move::Rock,
+                    Move::Scissors => Move::Paper,
+                };
+                0 + our_move as u32
+            }
+            "Y" => 3 + opponent_move as u32,
+            "Z" => {
+                let our_move = match opponent_move {
+                    Move::Paper => Move::Scissors,
+                    Move::Rock => Move::Paper,
+                    Move::Scissors => Move::Rock,
+                };
+                6 + our_move as u32
+            }
+            _ => panic!("Error")
+        }
+    }).sum();
+
+    return result;
+}
+
 fn main() {
     println!("Welcome to day 2 of Advent of Code");
     let file = fs::read_to_string("files/input.txt").unwrap();
     println!("Our score is: {}", process_part1(&file));
+    println!("Our score for part 2 is: {}", process_part2(&file));
 }
